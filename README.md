@@ -9,7 +9,7 @@
 </div>
 
 # Paper
-Solaris is a *clean-room* Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. Equations were verified to have high accuracy between 2017 and 2116. This library is an implementation based solely on the equations presented in the arXiv preprint.
+Solaris is a *clean-room* Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. The equations were verified by the authors to have high accuracy between 2017 and 2116. This library is an implementation of the paper based _solely on the_ equations presented in the arXiv preprint.
 
 # Validation
 The library implementation will be validated using the same methods the paper presents as well as some extra validation. [VSOP87](https://www.caglow.com/info/compute/vsop87) will be used as ground-truth in all tests.
@@ -23,6 +23,9 @@ The library implementation will be validated using the same methods the paper pr
 ## Performance
 - TBD:
   - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible with Linux
+  
+  # Disclaimer
+  In addition to the disclaimers noted in the license, the author(s) of this are in no way associated with the authors of the SolTrack paper and make no claim to be.
 
 
 # FAQ
