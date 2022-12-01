@@ -4,7 +4,7 @@
 
 <br>
 
-Solaris is a **clean-room** Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). SolTrack is a modern and optimized set of equations to predict the position of the Sun at any time and location on Earth. The equations are simple enough to run efficently on embedded systems, including but not limited to microcontrollers or PLCs. Equations were verified to have high accuracy between **2017** and **2116**. This library is a clean-room implementation of the equations presented in the paper; clean-room implementation is done in order to license this as MIT without any relicensing shenanigans.
+Solaris is a library to predict the position of the Sun at any time and location on Earth. Solaris is a **clean-room** Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. Equations were verified to have high accuracy between **2017** and **2116**. This library is a clean-room implementation based solely on the equations presented in the arXiv preprint.
 
 # Validation
 ## Accuracy
@@ -19,4 +19,4 @@ Solaris is a **clean-room** Rust implementation of SolTrack ([arXiv:2209.01557v1
 
 # FAQ
 ## Why "Solaris"?
-While yes, this name overloads the [operating system of the same name](https://en.wikipedia.org/wiki/Oracle_Solaris), I chose Solaris as a reference to a well-known sci-fi novel. Predicting the position of three suns was done by *[Trisolaris](https://www.litcharts.com/lit/the-three-body-problem/terms/trisolaris)*, thus, the prediction of the position of just one sun must be done by none other than *Solaris* (it only makes sense!).
+Predicting the position of three suns was done by *[Trisolaris](https://www.litcharts.com/lit/the-three-body-problem/terms/trisolaris)*, thus, the prediction of the position of just one sun must be done by none other than *Solaris* (it only makes sense!).
