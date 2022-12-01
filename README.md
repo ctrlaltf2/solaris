@@ -1,5 +1,5 @@
 <div align="center">
-  ![Solaris banner logo](assets/banner-logo.png)
+  <img src="https://github.com/ctrlaltf2/solaris/blob/main/assets/banner.png?raw=true" width="600"/>
 </div>
 
 <br>
