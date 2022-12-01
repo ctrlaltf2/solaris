@@ -1,12 +1,10 @@
-# Solaris
-A **clean-room** Rust implementation of SolTrack (arXiv:2209.01557v1).
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ctrlaltf2/solaris/main/assets/banner.png?token=GHSAT0AAAAAAB3UX2JQT2ZPVMILBNAD3TXOY4IFNBQ" alt="Solaris banner logo" width="400"/>
+</div>
 
-Equations were tested by paper authors to be valid between **2017** and **2116**.
+<br>
 
-# Motivation
-1. Learning a new language
-2. Implementing the equations of SolTrack under a more widely-known license
-3. Having fun!
+Solaris is a **clean-room** Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). SolTrack is a modern and optimized set of equations to predict the position of the Sun at any time and location on Earth. The equations are simple enough to run efficently on embedded systems, including but not limited to microcontrollers or PLCs. Equations were verified to have high accuracy between **2017** and **2116**. This library is a clean-room implementation of the equations presented in the paper; clean-room implementation is done in order to license this as MIT without any relicensing shenanigans.
 
 # Validation
 ## Accuracy
