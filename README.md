@@ -1,12 +1,19 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/ctrlaltf2/solaris/main/assets/banner.png?token=GHSAT0AAAAAAB3UX2JQT2ZPVMILBNAD3TXOY4IFNBQ" alt="Solaris banner logo" width="400"/>
+  ![Solaris banner logo](assets/banner-logo.png)
 </div>
 
 <br>
 
-Solaris is a library to predict the position of the Sun at any time and location on Earth. Solaris is a **clean-room** Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. Equations were verified to have high accuracy between **2017** and **2116**. This library is a clean-room implementation based solely on the equations presented in the arXiv preprint.
+<div align="center">
+  Solaris is a Rust library to efficiently predict the position of the Sun at any time and any location on Earth between the years 2017 and 2116. 
+</div>
+
+# Paper
+Solaris is a *clean-room* Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. Equations were verified to have high accuracy between 2017 and 2116. This library is an implementation based solely on the equations presented in the arXiv preprint.
 
 # Validation
+The library implementation will be validated using the same methods the paper presents as well as some extra validation. [VSOP87](https://www.caglow.com/info/compute/vsop87) will be used as ground-truth in all tests.
+
 ## Accuracy
 - [ ] What the paper authors did:
   - [ ] VSOP87 comparison: Position of sun seen from Arnhem, Netherlands near sunset/sunrise time
