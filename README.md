@@ -14,20 +14,20 @@ Solaris is a *clean-room* Rust implementation of SolTrack ([arXiv:2209.01557v1](
 # Validation
 The library implementation will be validated using the same methods the paper presents as well as some extra validation. [VSOP87](https://www.caglow.com/info/compute/vsop87) will be used as ground-truth in all tests.
 
-## Accuracy
+  ## Accuracy
 - [ ] What the paper authors did:
   - [ ] VSOP87 comparison: Position of sun seen from Arnhem, Netherlands near sunset/sunrise time
 - [ ] Further VSOP87 comparison: 
   - [ ] Random lat/long/time, scale up # timepoints proportionally based on size of sunset/sunrise time slice
 
-## Performance
+  ## Performance
 - TBD:
   - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible with Linux
   
-  # Disclaimer
+# Disclaimer
   In addition to the disclaimers noted in the license, the author(s) of this are in no way associated with the authors of the SolTrack paper and make no claim to be.
 
 
 # FAQ
-## Why "Solaris"?
+  ## Why "Solaris"?
 Predicting the position of three suns was done by *[Trisolaris](https://www.litcharts.com/lit/the-three-body-problem/terms/trisolaris)*, thus, the prediction of the position of just one sun must be done by none other than *Solaris* (it only makes sense!).
