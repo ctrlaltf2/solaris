@@ -17,11 +17,12 @@ The library implementation will be validated using the same methods the paper pr
 ## Accuracy
 - [ ] What the paper authors did:
   - [ ] VSOP87 comparison: Position of sun seen from Arnhem, Netherlands near sunset/sunrise time
-- [ ] Further VSOP87 comparison: Random lat/long/time, scale up # timepoints proportionally based on size of sunset/sunrise time slice
+- [ ] Further VSOP87 comparison: 
+  - [ ] Random lat/long/time, scale up # timepoints proportionally based on size of sunset/sunrise time slice
 
 ## Performance
 - TBD:
-  - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible just haven't done it before
+  - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible with Linux
 
 
 # FAQ
