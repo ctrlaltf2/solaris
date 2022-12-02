@@ -31,3 +31,17 @@ The library implementation will be validated using the same methods the paper pr
 # FAQ
   ## Why "Solaris"?
 Predicting the position of three suns was done by *[Trisolaris](https://www.litcharts.com/lit/the-three-body-problem/terms/trisolaris)*, thus, the prediction of the position of just one sun must be done by none other than *Solaris* (it only makes sense!).
+
+# Citations
+```bibtex
+@misc{https://doi.org/10.48550/arxiv.2209.01557,
+  doi       = {10.48550/ARXIV.2209.01557},
+  url       = {https://arxiv.org/abs/2209.01557}, 
+  author    = {van der Sluys, Marc and van Kan, Paul},
+  keywords  = {Instrumentation and Methods for Astrophysics (astro-ph.IM), Computational Physics (physics.comp-ph), FOS: Physical sciences, FOS: Physical sciences},
+  title     = {SolTrack: a free, fast and accurate routine to compute the position of the Sun},
+  publisher = {arXiv},
+  year      = {2022},
+  copyright = {Creative Commons Attribution Non Commercial Share Alike 4.0 International}
+}
+```
