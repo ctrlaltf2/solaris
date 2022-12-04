@@ -5,7 +5,7 @@ version = "0.0.1"
 edition = "2021"
 repository = "https://github.com/ctrlaltf2/solaris"
 license = "MIT"
-keywords = ["astronomy", "physics", "solar tracking", "solar power", "CPV"]
+keywords = ["astronomy", "physics", "solar_tracking", "solar_power", "CPV"]
 categories = ["algorithms", "science", "aerospace"]
 
 [dependencies]
