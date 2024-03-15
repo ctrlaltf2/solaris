@@ -23,6 +23,9 @@ The library implementation will be validated using the same methods the paper pr
   ## Performance
 - TBD:
   - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible with Linux
+
+# Further Steps
+I intend to take the paper a bit further once I implement my own version in Rust. Most of the paper's optimizations center around dropping higher order terms from standard equations and measuring their effects on the system, effectively finding a local minima where accuracy vs. speed was adequate for their purposes. I want to take this a bit further, and allow the number of higher order terms included to be configured at compile-time and on top of that, find other configurations that may compare to their paper in terms of accuracy vs. speed. Each configuration would be defined as the numbers of higher order terms to keep for each of the many sub-equations that make up the mathematical formulas. 
   
 # Disclaimer
   In addition to the disclaimers noted in the license, the author(s) of this are in no way associated with the authors of the SolTrack paper and make no claim to be.
