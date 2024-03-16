@@ -9,6 +9,7 @@ keywords = ["astronomy", "physics", "solar_tracking", "solar_power", "CPV"]
 categories = ["algorithms", "science", "aerospace"]
 
 [dependencies]
+num = "0.4.1"
 
 [lib]
 name = "solaris"
