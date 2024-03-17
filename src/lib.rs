@@ -32,14 +32,21 @@ type JD2000 = f64;
 //// Centuries since epoch year 2000.0
 type JC2000 = f64;
 
+struct SunPosition {
+    /// Compass direction
+    azimuth: f64,
+    /// altitude angle
+    altitude: f64,
+}
+
 // placeholder for organization
-pub fn impl_placeholder(
+pub fn solaris_base_impl(
     t_Jd: JD2000,
     t_Jc: JC2000,
     use_approx_R: bool,
     obs_longitude: f64,
     obs_latitude: f64,
-) -> f64 {
+) -> SunPosition {
     // (2) Simon et al., 1994
     // mean latitude
     let λ0 = 4.895063168 + 628.331966786 * t_Jc + 5.291838 * 10e-6 * (t_Jc * t_Jc);
@@ -132,16 +139,27 @@ pub fn impl_placeholder(
 
     let sin_H = H.sin();
     // (25) Urban and Seidalmann, 2012
+    // azimuth
     let A = fast_atan2(sin_H, cos_H * sin_lat - (sin_δ / cos_δ) * cos_lat);
 
-    // (26) zenith angle
+    // (26) uncorrected zenith angle
     let ζ = std::f64::consts::FRAC_PI_2 - h;
 
     // (27) Saemundsson 1986
     // Atmospheric refraction correction
-    //let delta_h = 0.0002967 * (0.4).cot
+    // Air temperature, (283 K)
+    const T: f64 = 283.;
+    // Air pressure (101 kPa)
+    const P: f64 = 101. * 1000.;
+    let delta_h = 0.0002967 * (1.0 / (h + (0.0031376 / (h + 0.0892)))).tan() * (283. / T);
 
-    0.0
+    // Correct altitude
+    let h = h + delta_h;
+
+    return SunPosition {
+        azimuth: A,
+        altitude: h,
+    };
 }
 
 pub fn add(left: usize, right: usize) -> usize {
@@ -153,8 +171,24 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn initial_check() {
+        // 2000-01-01 as julian day number
+        const jd2000_epoch: f64 = 2451544.5;
+        // ~2024-03-17T14:48
+        const now: f64 = 2460387.1166667;
+
+        // Somewhere on the road in central PA where I'm running this code :)
+        const obs_lat: f64 = 41.127323 * (std::f64::consts::PI / 180.);
+        const obs_lon: f64 = -77.438413 * (std::f64::consts::PI / 180.);
+
+        const t_Jd: f64 = now - jd2000_epoch;
+        const t_Jc: f64 = t_Jd / (365.25 * 100.);
+
+        let sun_pos = solaris_base_impl(t_Jd, t_Jc, false, obs_lat, obs_lon);
+        println!(
+            "altitude = {}, azimuth = {}",
+            sun_pos.altitude * (180. / std::f64::consts::PI),
+            sun_pos.azimuth * (180. / std::f64::consts::PI)
+        );
     }
 }
