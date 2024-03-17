@@ -9,11 +9,11 @@ pub fn fast_atan2<F: Float>(y: F, x: F) -> F {
         return (y / x).atan();
     } else if x == zero {
         if y < zero {
-            return -pi;
+            return NumCast::from(-std::f64::consts::PI / 2.).unwrap();
         } else if y == zero {
             return zero;
         } else if y > zero {
-            return pi;
+            return NumCast::from(std::f64::consts::PI / 2.).unwrap();
         }
     } else if x < zero {
         if y < zero {
@@ -162,10 +162,6 @@ pub fn solaris_base_impl(
     };
 }
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -175,11 +171,11 @@ mod tests {
         // 2000-01-01 as julian day number
         const jd2000_epoch: f64 = 2451544.5;
         // ~2024-03-17T14:48
-        const now: f64 = 2460387.1166667;
+        const now: f64 = 2460387.166666667;
 
         // Somewhere on the road in central PA where I'm running this code :)
-        const obs_lat: f64 = 41.127323 * (std::f64::consts::PI / 180.);
-        const obs_lon: f64 = -77.438413 * (std::f64::consts::PI / 180.);
+        const obs_lat: f64 = 40.884305 * (std::f64::consts::PI / 180.);
+        const obs_lon: f64 = -77.779766 * (std::f64::consts::PI / 180.);
 
         const t_Jd: f64 = now - jd2000_epoch;
         const t_Jc: f64 = t_Jd / (365.25 * 100.);
@@ -190,5 +186,29 @@ mod tests {
             sun_pos.altitude * (180. / std::f64::consts::PI),
             sun_pos.azimuth * (180. / std::f64::consts::PI)
         );
+    }
+
+    #[test]
+    fn fast_atan2_test() {
+        let approx_eq = |x: f64, y: f64| -> bool {
+            let diff = (y - x).abs();
+            println!("diff({}, {}) = {}", x, y, diff);
+            diff < 1e-6
+        };
+
+        // x < 0
+        assert!(approx_eq(fast_atan2::<f64>(-3., -4.), -2.4980915448));
+        assert!(approx_eq(fast_atan2::<f64>(0., -4.), 3.14159265359));
+        assert!(approx_eq(fast_atan2::<f64>(3., -4.), 2.4980915448));
+
+        // x == 0
+        assert!(approx_eq(fast_atan2::<f64>(-3., 0.), -1.57079632679));
+        assert!(approx_eq(fast_atan2::<f64>(0., 0.), 0.));
+        assert!(approx_eq(fast_atan2::<f64>(3., 0.), 1.57079632679));
+
+        // x > 0
+        assert!(approx_eq(fast_atan2::<f64>(-3., 4.), -0.643501108793));
+        assert!(approx_eq(fast_atan2::<f64>(0., 4.), 0.));
+        assert!(approx_eq(fast_atan2::<f64>(3., 4.), 0.643501108793));
     }
 }
