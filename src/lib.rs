@@ -32,7 +32,7 @@ type JD2000 = f64;
 //// Centuries since epoch year 2000.0
 type JC2000 = f64;
 
-struct SunPosition {
+pub struct SunPosition {
     /// Compass direction
     azimuth: f64,
     /// altitude angle
@@ -49,30 +49,30 @@ pub fn solaris_base_impl(
 ) -> SunPosition {
     // (2) Simon et al., 1994
     // mean latitude
-    let λ0 = 4.895063168 + 628.331966786 * t_Jc + 5.291838 * 10e-6 * (t_Jc * t_Jc);
+    let λ0 = 4.895063168 + 628.331966786 * t_Jc + 5.291838e-6 * (t_Jc * t_Jc);
 
     // (3) Chapront-Touze and Chapront, 1988
     // mean anomaly
-    let M = 6.240060141 + 628.301955152 * t_Jc + -2.682571 * 10e-6 * (t_Jc * t_Jc);
+    let M = 6.240060141 + 628.301955152 * t_Jc + -2.682571e-6 * (t_Jc * t_Jc);
 
     // (4) Meeus 1998
     // Sun's equation of the centre
-    let C = 3.34161088 * 10e-2 - 8.40725 * 10e-5 * t_Jc - 2.443 * 10e-7 * (t_Jc * t_Jc) * M.sin()
-        + (3.489437 * 10e-4 - 1.76278 * 10e-6 * t_Jc) * (2.0 * M).sin();
+    let C = (3.34161088e-2 - 8.40725e-5 * t_Jc - 2.443e-7 * (t_Jc * t_Jc)) * M.sin()
+        + (3.489437e-4 - 1.76278e-6 * t_Jc) * (2.0 * M).sin();
 
     // (5) true longitude
     let λ = λ0 + C;
 
     // (6) Chapront-Touze and Chapront, 1988
     // longitude of the Moon's mean ascending node
-    let Ω = 2.1824390725 - 33.7570464271 * t_Jc + 3.622256 * 10e-5 * (t_Jc * t_Jc);
+    let Ω = 2.1824390725 - 33.7570464271 * t_Jc + 3.622256e-5 * (t_Jc * t_Jc);
 
     // (7) Seidelmann, 1982
     // Nutation in longitude
-    let delta_ψ = -8.338601 * 10e-5 * Ω.sin();
+    let delta_ψ = -8.338601e-5 * Ω.sin();
 
     // (8) (9) (10) Simon et al., 1994
-    let e = 0.016708634 - 4.2037 * 10e-5 * t_Jc - 1.267 * 10e-7 * (t_Jc * t_Jc);
+    let e = 0.016708634 - 4.2037e-5 * t_Jc - 1.267e-7 * (t_Jc * t_Jc);
     let v = M + C;
     let R = if use_approx_R {
         1.0000010178 // (11)
@@ -82,7 +82,7 @@ pub fn solaris_base_impl(
 
     // (12) Kovalevsky and Seidelmann, 2004
     // Annual aberration
-    let delta_λ = (-9.93087 * 10e-5) / R;
+    let delta_λ = (-9.93087e-5) / R;
 
     // (13)
     // Sun's actual correct longitude
@@ -94,11 +94,11 @@ pub fn solaris_base_impl(
 
     // (15) Meeus, 1998
     // Mean obliquity
-    let ε0 = 0.409092804222 - 2.26965525 * 10e-4 * t_Jc - 2.86 * 10e-9 * (t_Jc * t_Jc);
+    let ε0 = 0.409092804222 - 2.26965525e-4 * t_Jc - 2.86e-9 * (t_Jc * t_Jc);
 
     // (16) Seidelmann, 1982 leading term only
     // nutation in obliquity
-    let delta_ε = 4.4615 * 10e-5 * Ω.cos();
+    let delta_ε = 4.4615e-5 * Ω.cos();
 
     // (17)
     // obiquity of the ecliptic
@@ -121,7 +121,7 @@ pub fn solaris_base_impl(
     // (21)
     // Local sidereal time
     let delta_θ = delta_ψ * cos_ε;
-    let θ0 = 4.89496121 + 6.300388098985 * t_Jd + 6.77 * 10e-6 * (t_Jc * t_Jc);
+    let θ0 = 4.89496121 + 6.300388098985 * t_Jd + 6.77e-6 * (t_Jc * t_Jc);
     let θ = θ0 + delta_θ + obs_longitude;
 
     // (20)
@@ -143,7 +143,7 @@ pub fn solaris_base_impl(
     let A = fast_atan2(sin_H, cos_H * sin_lat - (sin_δ / cos_δ) * cos_lat);
 
     // (26) uncorrected zenith angle
-    let ζ = std::f64::consts::FRAC_PI_2 - h;
+    let ζ = (std::f64::consts::PI / 2.) - h;
 
     // (27) Saemundsson 1986
     // Atmospheric refraction correction
@@ -184,7 +184,7 @@ mod tests {
         println!(
             "altitude = {}, azimuth = {}",
             sun_pos.altitude * (180. / std::f64::consts::PI),
-            sun_pos.azimuth * (180. / std::f64::consts::PI)
+            sun_pos.azimuth * (180. / std::f64::consts::PI),
         );
     }
 
@@ -192,7 +192,6 @@ mod tests {
     fn fast_atan2_test() {
         let approx_eq = |x: f64, y: f64| -> bool {
             let diff = (y - x).abs();
-            println!("diff({}, {}) = {}", x, y, diff);
             diff < 1e-6
         };
 
