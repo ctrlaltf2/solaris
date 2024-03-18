@@ -18,7 +18,7 @@ The library implementation will be validated using the same methods the paper pr
 - [ ] What the paper authors did:
   - [ ] VSOP87 comparison: Position of sun seen from Arnhem, Netherlands near sunset/sunrise time
 - [ ] Further VSOP87 comparison: 
-  - [ ] Random lat/long/time, scale up # timepoints proportionally based on size of sunset/sunrise time slice
+  - [ ] Random lat/long/time: scale up # timepoints proportionally based on Sun's apparent motion
 
   ## Performance
 - TBD:
