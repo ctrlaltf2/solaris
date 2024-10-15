@@ -11,6 +11,9 @@
 # Paper
 Solaris is a *clean-room* Rust implementation of SolTrack ([arXiv:2209.01557v1](https://arxiv.org/abs/2209.01557)). The equations are simple enough to run efficently on embedded systems. The equations were verified by the authors to have high accuracy between 2017 and 2116. This library is an implementation of the paper based _solely on the_ equations presented in the arXiv preprint.
 
+# Progress
+Initial version is available at tag `v0.1`. Expect breaking API changes. Initial version verified against NASA Horizons System and were within acceptable ranges.
+
 # Validation
 The library implementation will be validated using the same methods the paper presents as well as some extra validation. [VSOP87](https://www.caglow.com/info/compute/vsop87) will be used as ground-truth in all tests.
 
@@ -19,10 +22,6 @@ The library implementation will be validated using the same methods the paper pr
   - [ ] VSOP87 comparison: Position of sun seen from Arnhem, Netherlands near sunset/sunrise time
 - [ ] Further VSOP87 comparison: 
   - [ ] Random lat/long/time: scale up # timepoints proportionally based on Sun's apparent motion
-
-  ## Performance
-- TBD:
-  - Need to be able to lock a CPU core to 2.67 GHz for a fair comparison against the paper-- likely possible with Linux
 
 # Further Steps
 I intend to take the paper a bit further once I implement my own version in Rust. Most of the paper's optimizations center around dropping higher order terms from standard equations and measuring their effects on the system, effectively finding a local minima where accuracy vs. speed that was good enough to publish. I want to take this a bit further, and allow the number of higher order terms included to be configured at compile-time and on top of that, find other configurations that may compare to their paper in terms of accuracy vs. speed. Each configuration would be defined as the numbers of higher order terms to keep for each of the many sub-equations that make up the mathematical formulas.
