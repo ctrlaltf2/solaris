@@ -1,7 +1,7 @@
 [package]
 name = "solaris-rs" # solaris is taken thanks to a namesquatting cryptobro with a valueless coin.
 description = "A library to predict the position of the Sun"
-version = "0.1"
+version = "0.1.0"
 edition = "2021"
 repository = "https://github.com/ctrlaltf2/solaris"
 license = "MIT"
