@@ -44,8 +44,8 @@ pub fn solaris_base_impl(
     t_Jd: JD2000,
     t_Jc: JC2000,
     use_approx_R: bool,
-    obs_longitude: f64,
     obs_latitude: f64,
+    obs_longitude: f64,
 ) -> SunPosition {
     // (2) Simon et al., 1994
     // mean latitude
@@ -87,9 +87,12 @@ pub fn solaris_base_impl(
     // (13)
     // Sun's actual correct longitude
     let λ = λ + delta_λ + delta_ψ;
+    // Sometimes longitude can go out of range of radians and mess up later calculations
+    let λ = λ % (2. * std::f64::consts::PI);
 
     // (14)
     // Approximated ecliptical latitude of the sun
+    // GOOD
     const β: f64 = 0.0;
 
     // (15) Meeus, 1998
@@ -101,7 +104,7 @@ pub fn solaris_base_impl(
     let delta_ε = 4.4615e-5 * Ω.cos();
 
     // (17)
-    // obiquity of the ecliptic
+    // obliquity of the ecliptic
     let ε = ε0 + delta_ε;
 
     // (18) (19) Urban and Seidelmann, 2012
@@ -114,7 +117,14 @@ pub fn solaris_base_impl(
     let cos_λ = λ.cos();
 
     // right ascension
+    // let α = fast_atan2(sin_λ * cos_ε - tan_β * sin_ε, cos_λ);
     let α = fast_atan2(sin_λ * cos_ε - tan_β * sin_ε, cos_λ);
+    // hack: handle < 0
+    let α = if α < 0. {
+        α + (2. * std::f64::consts::PI)
+    } else {
+        α
+    };
     // declination
     let δ = (sin_β * cos_ε + cos_β * sin_ε * sin_λ).asin();
 
@@ -150,8 +160,8 @@ pub fn solaris_base_impl(
     // Air temperature, (283 K)
     const T: f64 = 283.;
     // Air pressure (101 kPa)
-    const P: f64 = 101. * 1000.;
-    let delta_h = 0.0002967 * (1.0 / (h + (0.0031376 / (h + 0.0892)))).tan() * (283. / T);
+    const P: f64 = 101.;
+    let delta_h = 0.0002967 * (1.0 / (h + (0.0031376 / (h + 0.0892)))).tan() * (283. / T) * (P / 101.);
 
     // Correct altitude
     let h = h + delta_h;
@@ -169,7 +179,7 @@ mod tests {
     #[test]
     fn initial_check() {
         // 2000-01-01 as julian day number
-        const jd2000_epoch: f64 = 2451544.5;
+        const jd2000_epoch: f64 = 2451545.00;
         // ~2024-03-17T14:48
         const now: f64 = 2460387.166666667;
 
@@ -179,6 +189,7 @@ mod tests {
 
         const t_Jd: f64 = now - jd2000_epoch;
         const t_Jc: f64 = t_Jd / (365.25 * 100.);
+        println!("jc = {}, jd = {}", t_Jc, t_Jd);
 
         let sun_pos = solaris_base_impl(t_Jd, t_Jc, false, obs_lat, obs_lon);
         println!(
@@ -186,6 +197,14 @@ mod tests {
             sun_pos.altitude * (180. / std::f64::consts::PI),
             sun_pos.azimuth * (180. / std::f64::consts::PI),
         );
+
+        let approx_eq = |x: f64, y: f64| -> bool {
+            let diff = (y - x).abs();
+            diff < 1e-6
+        };
+
+        assert!(approx_eq(sun_pos.azimuth * (180. / std::f64::consts::PI), -28.33772429847502));
+        assert!(approx_eq(sun_pos.altitude * (180. / std::f64::consts::PI), 44.4880091652758));
     }
 
     #[test]
